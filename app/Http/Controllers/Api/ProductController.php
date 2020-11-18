@@ -47,7 +47,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $response = $this->productRepository->show($product);
+        return response()->json($response["data"], $response["statusCode"]);
     }
 
     /**
