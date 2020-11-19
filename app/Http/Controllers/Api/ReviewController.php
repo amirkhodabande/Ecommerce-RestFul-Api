@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\Repositories\Api\Review\ReviewRepositoryInterface;
 use App\Review;
 use Illuminate\Http\Request;
@@ -22,9 +23,9 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
+        return $this->reviewRepository->index($product);
     }
 
     /**
@@ -56,7 +57,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        // return $this->reviewRepository->show($review);
     }
 
     /**
