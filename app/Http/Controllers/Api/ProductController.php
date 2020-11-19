@@ -24,8 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $response = $this->productRepository->index();
-        return response()->json($response["data"], $response["statusCode"]);
+        return $this->productRepository->index();
     }
 
     /**
@@ -47,8 +46,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $response = $this->productRepository->show($product);
-        return response()->json($response["data"], $response["statusCode"]);
+        return $this->productRepository->show($product);
     }
 
     /**
