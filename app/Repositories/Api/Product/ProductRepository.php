@@ -2,12 +2,13 @@
 
 namespace App\Repositories\Api\Product;
 
+use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Product;
 use App\Repositories\Api\Product\ProductRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -16,18 +17,10 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function index()
     {
-        $products = Product::paginate(8);
-        return $this->response([$products], self::SUCCUSUS_STATUS_CODE);
+        return ProductCollection::collection(Product::paginate(5));
     }
     public function show(Product $product)
     {
-        return $this->response([new ProductResource($product)], self::SUCCUSUS_STATUS_CODE);
-        return $this->response([$product], self::SUCCUSUS_STATUS_CODE);
-    }
-
-    public function response($data, int $statusCode)
-    {
-        $response = ["data" => $data, "statusCode" => $statusCode];
-        return $response;
+        return new ProductResource($product);
     }
 }
