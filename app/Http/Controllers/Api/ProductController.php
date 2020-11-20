@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Product;
 use App\Repositories\Api\Product\ProductRepositoryInterface;
-use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -16,6 +18,7 @@ class ProductController extends Controller
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
+        $this->middleware('auth:api')->except('index', 'show');
     }
     /**
      * Display a listing of the resource.
@@ -30,12 +33,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\Product\ProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        return $this->productRepository->store($request);
     }
 
     /**
@@ -56,9 +59,9 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        return $this->productRepository->update($request, $product);
     }
 
     /**
@@ -69,6 +72,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        return $this->productRepository->destroy($product);
     }
 }
