@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Review\ReviewRequest;
+use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Product;
-use App\Repositories\Api\Review\ReviewRepositoryInterface;
 use App\Review;
-use Illuminate\Http\Request;
+use App\Repositories\Api\Review\ReviewRepositoryInterface;
 
 class ReviewController extends Controller
 {
@@ -17,6 +18,7 @@ class ReviewController extends Controller
     public function __construct(ReviewRepositoryInterface $reviewRepository)
     {
         $this->reviewRepository = $reviewRepository;
+        $this->middleware('auth:api')->except('index', 'show');
     }
     /**
      * Display a listing of the resource.
@@ -29,24 +31,14 @@ class ReviewController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Review\ReviewRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReviewRequest $request, Product $product)
     {
-        //
+        return $this->reviewRepository->store($request, $product);
     }
 
     /**
@@ -55,32 +47,21 @@ class ReviewController extends Controller
      * @param  \App\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function show(Review $review)
+    public function show(Product $product, Review $review)
     {
-        // return $this->reviewRepository->show($review);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Review $review)
-    {
-        //
+        return $this->reviewRepository->show($product, $review);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Review\UpdateReviewRequest  $request
      * @param  \App\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(UpdateReviewRequest $request, Product $product, Review $review)
     {
-        //
+        return $this->reviewRepository->update($request, $product, $review);
     }
 
     /**
@@ -89,8 +70,8 @@ class ReviewController extends Controller
      * @param  \App\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy(Product $product, Review $review)
     {
-        //
+        return $this->reviewRepository->destroy($product, $review);
     }
 }
