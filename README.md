@@ -18,7 +18,7 @@
 4. Run database Seeder to make some fake Users,Products and Product Reviews
    : `php artisan db:seed`
 
-## The api Collection(postman) : `https://www.getpostman.com/collections/249eba70da464d3ad40d`
+- ## The api Collection(postman) : `https://www.getpostman.com/collections/249eba70da464d3ad40d`
 
 5. Import apis to your post man
 
